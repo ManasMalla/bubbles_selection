@@ -28,7 +28,7 @@ bool checkForDuplicates(List<Bubble> bubbles) {
   return true;
 }
 
-class BubbleSelectionGame extends Forge2DGame with HasTappables, HasDraggables {
+class BubbleSelectionGame extends FlameGame with HasTappables {
   BubbleSelectionGame({
     required this.onSelect,
     required this.onRemoved,
@@ -45,7 +45,6 @@ class BubbleSelectionGame extends Forge2DGame with HasTappables, HasDraggables {
   @override
   @override
   Future<void>? onLoad() {
-    world.setGravity(Vector2(0, -0.1));
     // TODO: implement onLoad
     final boundaries = createBoundaries(this, borderColor);
 
@@ -60,8 +59,7 @@ class BubbleSelectionGame extends Forge2DGame with HasTappables, HasDraggables {
   }
 }
 
-class BubbleBody extends BodyComponent<BubbleSelectionGame>
-    with Tappable, components.Draggable {
+class BubbleBody extends BodyComponent<BubbleSelectionGame> with Tappable {
   late double textWidth;
   final Bubble bubble;
   late double textHeight;
@@ -180,30 +178,5 @@ class BubbleBody extends BodyComponent<BubbleSelectionGame>
       gameRef.onRemoved(items[0]);
     }
     return true;
-  }
-
-  @override
-  bool onDragUpdate(DragUpdateInfo info) {
-    log(info.delta.game.toString());
-
-    // final dragVector = info.delta.game;
-    final pointerVelocity = gestures.Velocity(
-      pixelsPerSecond: info.delta.game.toOffset(),
-    );
-
-    body.applyLinearImpulse(
-      Vector2(
-        pointerVelocity.pixelsPerSecond.dx,
-        pointerVelocity.pixelsPerSecond.dy,
-      ), // dragVector * 1.5,
-    );
-    return super.onDragUpdate(info);
-  }
-
-  @override
-  bool onDragEnd(DragEndInfo info) {
-    // TODO: implement onDragEnd
-    body.linearVelocity = info.velocity;
-    return super.onDragEnd(info);
   }
 }
