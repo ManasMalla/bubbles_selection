@@ -28,7 +28,7 @@ bool checkForDuplicates(List<Bubble> bubbles) {
   return true;
 }
 
-class BubbleSelectionGame extends FlameGame with HasTappables {
+class BubbleSelectionGame extends Forge2DGame with HasTappables {
   BubbleSelectionGame({
     required this.onSelect,
     required this.onRemoved,
